@@ -1,10 +1,10 @@
-import Student from './models/Student';
+import Student from '../models/Student';
 
 class HomeController {
   async index(req, res) {
     const student = await Student.create({
-      firstName: 'Arthur',
-      lastName: 'Kellermann',
+      first_name: 'Arthur',
+      last_name: 'Kellermann',
       email: 'arthur.kellermann@gmail.com',
       age: 18,
       weight: 80.20,

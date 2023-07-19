@@ -3,8 +3,8 @@ import Sequelize, { Model } from 'sequelize';
 export default class Student extends Model {
   static init(sequelize) {
     super.init({
-      firstName: Sequelize.STRING,
-      lastName: Sequelize.STRING,
+      first_name: Sequelize.STRING,
+      last_name: Sequelize.STRING,
       email: Sequelize.STRING,
       age: Sequelize.INTEGER,
       weight: Sequelize.FLOAT,
