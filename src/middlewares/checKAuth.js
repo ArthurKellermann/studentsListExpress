@@ -23,12 +23,12 @@ export default async (req, res, next) => {
       },
     });
 
-    if (!user) return res.status(401).json({ errors: 'Token is required' });
+    if (!user) return res.status(401).json({ errors: 'User must be logged in' });
 
     req.userId = id;
     req.userEmail = email;
     return next();
   } catch (e) {
-    return res.status(401).json({ errors: 'Token is required' });
+    return res.status(401).json({ errors: 'User must be logged in' });
   }
 };
