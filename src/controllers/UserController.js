@@ -8,7 +8,8 @@ class UserController {
         email: req.body.email,
         password: req.body.password,
       });
-      return res.status(200).json({ newUser: user });
+      const { id, name, email } = user;
+      return res.status(200).json({ newUser: { id, name, email } });
     } catch (e) {
       return res.status(400).json({ errors: e.errors.map((err) => err.message) });
     }
@@ -16,7 +17,7 @@ class UserController {
 
   async index(req, res) {
     try {
-      const users = await User.findAll();
+      const users = await User.findAll({ attributes: ['id', 'name', 'email'] });
       return res.status(200).json({ users });
     } catch (e) {
       return res.status(500).json({ error: e });
@@ -25,10 +26,11 @@ class UserController {
 
   async showById(req, res) {
     try {
-      const { id } = req.params;
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(req.params.id);
+
+      const { id, name, email } = user;
       if (!user) return res.status(404).json({ message: 'Invalid ID' });
-      return res.status(200).json({ user });
+      return res.status(200).json({ id, name, email });
     } catch (e) {
       return res.status(500).json({ error: e });
     }
@@ -36,15 +38,15 @@ class UserController {
 
   async update(req, res) {
     try {
-      const { id } = req.params;
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(req.userId);
       if (!user) return res.status(404).json({ message: 'Invalid ID' });
       user.update({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
       });
-      return res.status(200).json({ user });
+      const { id, name, email } = user;
+      return res.status(200).json({ user: { id, name, email } });
     } catch (e) {
       return res.status(500).json({ errors: e.errors.map((err) => err.message) });
     }
@@ -52,8 +54,7 @@ class UserController {
 
   async delete(req, res) {
     try {
-      const { id } = req.params;
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(req.userId);
       if (!user) return res.status(404).json({ message: 'Invalid ID' });
       await user.destroy();
       return res.status(200).json({ message: 'User deleted' });
