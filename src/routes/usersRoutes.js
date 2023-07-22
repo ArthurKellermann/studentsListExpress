@@ -4,7 +4,7 @@ import checKAuth from '../middlewares/checKAuth';
 
 const router = new Router();
 
-// router.get('/', user.index);
+router.get('/', user.index);
 // router.get('/:id', user.showById);
 
 router.post('/', user.register);
