@@ -1,8 +1,16 @@
 import Student from '../models/Student';
+import Photo from '../models/Photo';
 
 class StudentController {
   async index(req, res) {
-    const students = await Student.findAll();
+    const students = await Student.findAll({
+      attributes: ['id', 'first_name', 'last_name', 'email', 'age', 'weight', 'height'],
+      order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
+      include: {
+        model: Photo,
+        attributes: ['filename', 'originalname'],
+      },
+    });
     return res.status(200).json({ students });
   }
 
@@ -27,7 +35,14 @@ class StudentController {
       const { id } = req.params;
       if (!id) return res.status(400).json({ message: 'Invalid ID' });
 
-      const student = await Student.findByPk(id);
+      const student = await Student.findByPk(id, {
+        attributes: ['id', 'first_name', 'last_name', 'email', 'age', 'weight', 'height'],
+        order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
+        include: {
+          model: Photo,
+          attributes: ['filename', 'originalname'],
+        },
+      });
       if (!student) return res.status(400).json({ message: 'Student does not exist' });
       return res.status(200).json({ student });
     } catch (e) {
