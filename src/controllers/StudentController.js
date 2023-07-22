@@ -8,7 +8,7 @@ class StudentController {
       order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
       include: {
         model: Photo,
-        attributes: ['filename', 'originalname'],
+        attributes: ['url', 'filename', 'originalname'],
       },
     });
     return res.status(200).json({ students });
@@ -40,7 +40,7 @@ class StudentController {
         order: [['id', 'DESC'], [Photo, 'id', 'DESC']],
         include: {
           model: Photo,
-          attributes: ['filename', 'originalname'],
+          attributes: ['url', 'filename', 'originalname'],
         },
       });
       if (!student) return res.status(400).json({ message: 'Student does not exist' });

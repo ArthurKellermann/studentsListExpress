@@ -22,6 +22,12 @@ export default class Photo extends Model {
           ,
         },
       },
+      url: {
+        type: Sequelize.VIRTUAL,
+        get() {
+          return `http://localhost:8000/images/${this.getDataValue('filename')}`;
+        },
+      },
     }, {
       sequelize,
       tableName: 'photos',
