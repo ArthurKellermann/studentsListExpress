@@ -1,9 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import home from './src/routes/home';
-import user from './src/routes/user';
-import auth from './src/routes/auth';
-import student from './src/routes/studentRoutes';
+import home from './src/routes/homeRoutes';
+import user from './src/routes/usersRoutes';
+import auth from './src/routes/authRoutes';
+import student from './src/routes/studentsRoutes';
+import file from './src/routes/fileRoutes';
 import './src/database';
 
 dotenv.config();
@@ -25,6 +26,7 @@ class App {
     this.app.use('/users', user);
     this.app.use('/auth', auth);
     this.app.use('/students', student);
+    this.app.use('/file', file);
   }
 }
 
