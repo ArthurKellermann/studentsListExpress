@@ -45,6 +45,10 @@ class HomeController {
               url: 'http://localhost:8000/students/:id',
             },
           },
+          file: {
+            upload: 'POST',
+            url: 'http://localhost:8000/file/',
+          },
         },
       },
     });
