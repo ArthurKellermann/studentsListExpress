@@ -1,0 +1,149 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "REST API for registering students in a school's SQL database",
+    "description": "This API aims to facilitate the process of registering students and their photos in a database",
+    "termsOfService": "",
+    "contact": {
+      "email": "arthur.kellermann956@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/",
+      "description": "App"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Register a user",
+        "description": "This route will be responsible for registering a new user",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "johndoe@gmail.com",
+                "password": "john123456"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Unauthorized"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "John Doe",
+                  "email": "johndoe@gmail.com"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update the user",
+        "description": "This route will be responsible for updating the user registered and logged in",
+        "tags": ["Users"],
+        "security": [{"bearerAuth": []}],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "name": "John Doe Updated"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "John Doe Updated",
+                  "email": "johndoe@gmail.com"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the user",
+        "description": "This route will be responsible for delete the user registered and logged in",
+        "tags": ["Users"],
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "400": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "message": "User deleted"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    }
+  }
+

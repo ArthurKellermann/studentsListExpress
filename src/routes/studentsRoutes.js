@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import student from '../controllers/StudentController';
-import checkAuth from '../middlewares/checKAuth';
+import checkAuth from '../middlewares/checkAuth';
 
 const router = new Router();
 

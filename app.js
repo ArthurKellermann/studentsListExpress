@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
 import { resolve } from 'path';
 import home from './src/routes/homeRoutes';
 import user from './src/routes/usersRoutes';
@@ -7,6 +8,8 @@ import auth from './src/routes/authRoutes';
 import student from './src/routes/studentsRoutes';
 import file from './src/routes/fileRoutes';
 import './src/database';
+
+import swaggerDocs from './src/swagger.json';
 
 dotenv.config();
 
@@ -29,6 +32,7 @@ class App {
     this.app.use('/auth', auth);
     this.app.use('/students', student);
     this.app.use('/file', file);
+    this.app.use('/apidocs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
   }
 }
 

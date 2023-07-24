@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import checkAuth from '../middlewares/checKAuth';
+import checkAuth from '../middlewares/checkAuth';
 import file from '../controllers/FileController';
 
 const router = new Router();
