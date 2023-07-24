@@ -46,8 +46,10 @@ class HomeController {
             },
           },
           file: {
-            upload: 'POST',
-            url: 'http://localhost:8000/file/',
+            upload: {
+              type: 'POST',
+              url: 'http://localhost:8000/file/',
+            },
           },
         },
       },
