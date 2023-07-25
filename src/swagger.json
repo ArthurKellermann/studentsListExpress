@@ -20,7 +20,9 @@
       "post": {
         "summary": "Register a user",
         "description": "This route will be responsible for registering a new user",
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -37,7 +39,7 @@
         },
         "responses": {
           "400": {
-            "description": "Unauthorized"
+            "description": "Bad request"
           },
           "201": {
             "description": "Created",
@@ -59,8 +61,14 @@
       "put": {
         "summary": "Update the user",
         "description": "This route will be responsible for updating the user registered and logged in",
-        "tags": ["Users"],
-        "security": [{"bearerAuth": []}],
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -75,7 +83,7 @@
         },
         "responses": {
           "400": {
-            "description": "Unauthorized"
+            "description": "Bad request"
           },
           "200": {
             "description": "OK",
@@ -97,11 +105,17 @@
       "delete": {
         "summary": "Delete the user",
         "description": "This route will be responsible for delete the user registered and logged in",
-        "tags": ["Users"],
-        "security": [{"bearerAuth": []}],
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "400": {
-            "description": "Unauthorized"
+            "description": "Bad request"
           },
           "200": {
             "description": "OK",
@@ -118,32 +132,405 @@
           }
         }
       }
-    }
-  },
-    "components": {
-      "schemas": {
-        "User": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "email": {
-              "type": "string"
-            },
-            "password": {
-              "type": "string"
+    },
+    "/auth": {
+      "post": {
+        "summary": "Login as user",
+        "description": "This route will be responsible for authenticating the user by creating a token",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "email": "johndoe@gmail.com",
+                "password": "john123456"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoidGlhZ29wYWNoZWNvQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA1NjIzMCwiZXhwIjoxNjkwNjYxMDMwfQ.TLvXfW5O5w2x7wTLxCIDerZvcmCOS9wvFk70mMMZ_Ps"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/students": {
+      "get": {
+        "summary": "All registered students",
+        "description": "This route will be responsible for getting a list of all students",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                },
+                "example": {
+                  "id": 1,
+                  "first_name": "Alex",
+                  "last_name": "Green",
+                  "email": "alexgreen@gmail.com",
+                  "age": 17,
+                  "weight": 73.00,
+                  "height": 1.80
+                }
+              }
             }
           }
         }
       },
-      "securitySchemes": {
-        "bearerAuth": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
+      "post": {
+        "summary": "Register a student",
+        "description": "This route will be responsible for registering a new student",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Student"
+              },
+              "example": {
+                "first_name": "Alex",
+                "last_name": "Green",
+                "email": "alexgreen@gmail.com",
+                "age": "17",
+                "weight": "73.00",
+                "height": "1.80"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                },
+                "example": {
+                  "id": 1,
+                  "first_name": "Alex",
+                  "last_name": "Green",
+                  "email": "alexgreen@gmail.com",
+                  "age": "17",
+                  "weight": "73.00",
+                  "height": "1.80"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/students/{id}": {
+      "get": {
+        "summary": "Get a student by id",
+        "description": "This route will be responsible for showing a student by id",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of student to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                },
+                "example": {
+                  "id": 1,
+                  "first_name": "Alex",
+                  "last_name": "Green",
+                  "email": "alexgreen@gmail.com",
+                  "age": 17,
+                  "weight": 73.00,
+                  "height": 1.80
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a student by id",
+        "description": "This route will be responsible for updating a student by id",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of student to update",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Student"
+              },
+              "example": {
+                "last_name": "Brown"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                },
+                "example": {
+                  "message": "Student updated successfully"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a student by id",
+        "description": "This route will be responsible for delete a student by id",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of student to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                },
+                "example": {
+                  "message": "Student deleted successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/file": {
+      "post": {
+        "summary": "Upload a student photo ",
+        "description": "This route will be responsible for loading a student photo corresponding to the id",
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "student_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "fileName",
+                  "student_id"
+                ]
+              },
+              "example": {
+                "fileName": "FILE_TO_UPLOAD",
+                "student_id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad request"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/File"
+                },
+                "example": {
+                  "url": "http://localhost:8000/images/1690315083589.jpg",
+                  "id": 10,
+                  "originalname": "exampleImage.jpg",
+                  "filename": "1690315083589.jpg",
+                  "student_id": 1,
+                  "updated_at": "2023-07-25T19:58:03.611Z",
+                  "created_at": "2023-07-25T19:58:03.611Z"
+                }
+              }
+            }
+          }
         }
       }
     }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Student": {
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "number",
+            "format": "float"
+          },
+          "height": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "File": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "originalname": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "student_id": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
   }
-
+}

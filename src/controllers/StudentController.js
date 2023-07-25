@@ -24,7 +24,7 @@ class StudentController {
         weight: req.body.weight,
         height: req.body.height,
       });
-      return res.status(200).json({ student });
+      return res.status(201).json({ student });
     } catch (e) {
       return res.status(400).json({ errors: e.errors.map((err) => err.message) });
     }
@@ -67,7 +67,7 @@ class StudentController {
         height: req.body.height,
       });
 
-      return res.status(200).json({ student });
+      return res.status(200).json({ message: 'Student updated successfully' });
     } catch (e) {
       return res.status(400).json({ errors: e.errors.map((err) => err.message) });
     }
@@ -79,7 +79,7 @@ class StudentController {
       if (!id) return res.status(400).json({ message: 'Invalid ID' });
 
       await Student.destroy({ where: { id } });
-      return res.status(200).json({ message: 'Student deleted' });
+      return res.status(200).json({ message: 'Student deleted successfully' });
     } catch (e) {
       return res.status(400).json({ errors: e });
     }
