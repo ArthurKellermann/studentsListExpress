@@ -43,7 +43,7 @@ Below is a concise summary of the accessible endpoints and their corresponding o
 **- /apidocs (GET):** Full API documentation with Swagger.
 
 ## Contributing
-We welcome your pull requests. For significant changes, kindly open an issue first to discuss your proposed changes.
+We welcome your pull requests.
 
 ## License
 MIT
